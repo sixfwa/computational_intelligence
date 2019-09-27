@@ -1,5 +1,6 @@
 import math
 from random import shuffle
+import pandas as pd
 
 
 class Graph:
@@ -84,6 +85,9 @@ class Graph:
         n = len(self.graph)
         return math.factorial(n - 1)
 
+    def calculate_distance(self, x_a, x_b, y_a, y_b):
+        distance = math.sqrt(((x_b - x_a) ** 2) + ((y_b - y_a) ** 2))
+        return distance
 
 graph = Graph()
 
@@ -110,3 +114,8 @@ print("Does the path exist for the path -> {}: {}".format(routes,
 
 print("Cost of path: {}".format(graph.cost_of_path(routes)))
 print("Random route: {}".format(graph.generate_random_path()))
+
+df = pd.read_csv('ulysses16.csv', index_col='id')
+print(df)
+
+input()
