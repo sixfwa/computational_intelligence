@@ -2,6 +2,8 @@ import math
 from random import shuffle
 
 
+# This graph assumes that all the nodes added are all connected
+# to each other.
 class CompleteGraph:
 
     def __init__(self):
@@ -30,6 +32,8 @@ class CompleteGraph:
             del self.graph[node]
             return self.graph
 
+    # Euclidean distance between two nodes. Only if those nodes
+    # exist on the graph
     def euclidean_distance(self, node_1, node_2):
         if self.node_exists(node_1) and self.node_exists(node_2):
             node_1_coord = self.graph[node_1]
@@ -48,6 +52,7 @@ class CompleteGraph:
                 cost += self.euclidean_distance(nodes[i], nodes[i + 1])
         return cost
 
+    # Generates a random path. Returns a list
     def random_path(self):
         nodes = self.get_nodes()
         shuffle(nodes)
