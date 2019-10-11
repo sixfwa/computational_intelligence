@@ -58,6 +58,10 @@ class CompleteGraph:
         shuffle(nodes)
         return nodes
 
+    # Get the number of routes
+    def get_number_of_routeS(self):
+        num_nodes = len(self.get_nodes())
+        
 
 cg = CompleteGraph()
 cg.add_node("A", (1, 2))
