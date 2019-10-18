@@ -1,9 +1,11 @@
 import math
 from random import shuffle
-
+from utils import from_csv
 
 # This graph assumes that all the nodes added are all connected
 # to each other.
+
+
 class CompleteGraph:
 
     def __init__(self):
@@ -15,6 +17,7 @@ class CompleteGraph:
     def get_node(self, name):
         return self.graph[name]
 
+    # Returns a list of all the nodes on the complete graph
     def get_nodes(self):
         nodes = [node for node in self.graph]
         return nodes
@@ -31,6 +34,10 @@ class CompleteGraph:
         if self.node_exists(node):
             del self.graph[node]
             return self.graph
+
+    def number_of_routes(self):
+        number_of_nodes = len(self.get_nodes())
+        return math.factorial(number_of_nodes - 1)
 
     # Euclidean distance between two nodes. Only if those nodes
     # exist on the graph
@@ -56,29 +63,64 @@ class CompleteGraph:
     def random_path(self):
         nodes = self.get_nodes()
         shuffle(nodes)
+        nodes = tuple(nodes)
         return nodes
 
 
-cg = CompleteGraph()
-cg.add_node("A", (1, 2))
-cg.add_node("B", (3, 3))
-cg.add_node("C", (6, 2))
-cg.add_node("D", (7, 5))
-cg.add_node("E", (1, 7))
-cg.add_node("F", (5, 4))
-cg.add_node("G", (7, 9))
-cg.add_node("H", (8, 8))
-print(cg.get_complete_graph())
-print(cg.euclidean_distance("A", "B"))
-print(cg.random_path())
-print(cg.get_path_cost(cg.random_path()))
-print(cg.remove_node("B"))
-print("\n")
+# cg = CompleteGraph()
+# cg.add_node("A", (1, 2))
+# cg.add_node("B", (3, 3))
+# cg.add_node("C", (6, 2))
+# cg.add_node("D", (7, 5))
+# cg.add_node("E", (1, 7))
+# cg.add_node("F", (5, 4))
+# cg.add_node("G", (7, 9))
+# cg.add_node("H", (8, 8))
+# print(cg.get_complete_graph())
+# print(cg.euclidean_distance("A", "B"))
+# print(cg.random_path())
+# print(cg.get_path_cost(cg.random_path()))
+# print(cg.remove_node("B"))
+# print("\n")
 
-g = CompleteGraph()
-g.add_node("A", (1, 2))
-g.add_node("B", (4, 5))
-g.add_node("C", (3, 2))
-path = g.random_path()
-print("Random Route Is: {}".format(path))
-print("Cost: {}".format(g.get_path_cost(path)))
+# g = CompleteGraph()
+# g.add_node("A", (1, 2))
+# g.add_node("B", (4, 5))
+# g.add_node("C", (3, 2))
+# path = g.random_path()
+# print("Random Route Is: {}".format(path))
+# print("Cost: {}".format(g.get_path_cost(path)))
+
+ulysses_data = from_csv("ulysses16")
+# print(ulysses_data)
+
+ulysses = CompleteGraph()
+for item in ulysses_data:
+    name = item[0]
+    coordinate = (item[1], item[2])
+    ulysses.add_node(name, coordinate)
+
+# All possible routes Naive
+number = ulysses.number_of_routes()
+counter = 0
+routes = {}
+while counter < number:
+    # create a random route and check to see if it is in the routes list
+    # if it is in the list: skip it and do not increment the counter
+    # if it is not in the list
+    route = ulysses.random_path()
+    cost = ulysses.get_path_cost(route)
+    if route in routes:
+        pass
+    else:
+        print(counter)
+        print("Route: {}\tCost: {}".format(route, cost))
+        routes[route] = cost
+        counter += 1
+
+print(len(routes))
+
+# path = ulysses.random_path()
+# print("Random Route Is: {}".format(path))
+# print("Cost: {}".format(ulysses.get_path_cost(path)))
+# print("Number of routes: {}".format(ulysses.number_of_routes()))
