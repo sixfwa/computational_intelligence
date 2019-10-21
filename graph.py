@@ -67,7 +67,7 @@ class CompleteGraph:
         return nodes
 
     # Get the number of routes
-    def get_number_of_routeS(self):
+    def get_number_of_routes(self):
         num_nodes = len(self.get_nodes())
         
 
