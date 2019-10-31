@@ -1,6 +1,7 @@
 from graph import CompleteGraph
-from algorithms import (best_neighbour, random_search,
-                        swap_elements, two_opt_neighbourhood)
+from algorithms import (best_neighbourhood, random_search,
+                        swap_elements, two_opt_neighbourhood,
+                        local_search)
 from utils import from_csv
 
 data = from_csv("ulysses16")
@@ -15,10 +16,10 @@ for item in data:
 
 
 def testing_random_search():
-    limit = 10
+    limit = 20
     print("Random Search Algorithm Example ({} seconds)".format(limit))
     shortest = random_search(graph, limit)
-    print("Shortest Tour {}".format(shortest[0]))
+    print("Shortest Tour: {}".format(shortest[0]))
     print("Cost: {}".format(shortest[1]))
 
 
@@ -30,18 +31,20 @@ def testing_two_opt_neighbourhood():
         print(opt_tour)
 
 
-def testing_best_neighbour():
+def testing_best_neighbourhood():
     tour = graph.random_tour()
     print("Random Tour: {}".format(tour))
-    print(best_neighbour(graph, tour))
+    print(best_neighbourhood(graph, tour))
 
 
-testing_best_neighbour()
-# tour = graph.random_tour()
-# neighborhood_tours = two_opt_neighbourhood(tour)
-# costs = {}
-# for neighborhood_tour in neighborhood_tours:
-#     costs[neighborhood_tour] = graph.get_tour_cost(neighborhood_tour)
+def testing_local_search():
+    limit = 20
+    print("Local Search Algorithm Example ({} seconds)".format(limit))
+    shortest = local_search(graph, limit)
+    print("Shortest Tour: {}".format(shortest[0]))
+    print("Cost: {}".format(shortest[1]))
 
-# for k, v in costs.items():
-#     print("{} --> {}".format(k, v))
+
+testing_random_search()
+print("\n")
+testing_local_search()
