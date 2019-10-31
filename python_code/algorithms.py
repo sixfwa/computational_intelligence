@@ -1,5 +1,6 @@
 import time
 import operator
+from graph import CompleteGraph
 
 
 # Parameters CompleteGraph and time limit
@@ -40,3 +41,16 @@ def two_opt_neighbourhood(tour):
             if not switched in switched_tours and not switched == tour and not switched[::-1] in switched_tours:
                 switched_tours.append(switched)
     return switched_tours
+
+
+# Best Neighbour Step Function
+# Takes a neighbourhood (with the same structure as that returned by the two opt function)
+# and returns the shortest tour in the neighbourhood
+def best_neighbour(graph, tour):
+    neighbourhood_tours = two_opt_neighbourhood(tour)
+    cost_dictionary = {}
+    for neighbourhood_tour in neighbourhood_tours:
+        cost_dictionary[neighbourhood_tour] = graph.get_tour_cost(tour)
+
+    shortest = min(cost_dictionary.items(), key=operator.itemgetter(1))
+    return shortest
